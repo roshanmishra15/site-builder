@@ -21,8 +21,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// ✅ FIXED: Express v5 / Node v22 crash fix
-app.options("/*", cors(corsOptions));
+// ✅ Express v5 fix (wildcard OPTIONS)
+app.options(/.*/, cors(corsOptions));
 
 app.post(
   "/app/stripe",
@@ -30,7 +30,6 @@ app.post(
   stripeWebhook
 );
 
-// JSON parser should be BEFORE routes
 app.use(express.json({ limit: "50mb" }));
 
 app.all("/api/auth/*", toNodeHandler(auth));
