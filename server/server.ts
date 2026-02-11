@@ -21,7 +21,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// ✅ Express v5 fix (wildcard OPTIONS)
+// ✅ Express v5 wildcard fix
 app.options(/.*/, cors(corsOptions));
 
 app.post(
@@ -32,7 +32,8 @@ app.post(
 
 app.use(express.json({ limit: "50mb" }));
 
-app.all("/api/auth/*", toNodeHandler(auth));
+// ✅ Express v5 wildcard fix for auth
+app.all(/^\/api\/auth\/.*/, toNodeHandler(auth));
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Server is Live!");
