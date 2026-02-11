@@ -14,15 +14,15 @@ const trustedOrigins = process.env.TRUSTED_ORIGINS
   ? process.env.TRUSTED_ORIGINS.split(",")
   : ["http://localhost:5173"];
 
-app.use(
-  cors({
-    origin: trustedOrigins,
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: trustedOrigins,
+  credentials: true,
+};
 
-// IMPORTANT: handle preflight
-app.options("*", cors());
+app.use(cors(corsOptions));
+
+// ✅ FIXED: Express v5 / Node v22 crash fix
+app.options("/*", cors(corsOptions));
 
 app.post(
   "/app/stripe",
