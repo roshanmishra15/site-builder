@@ -8,7 +8,9 @@ import projectRouter from "./routes/projectRoutes.js";
 import { stripeWebhook } from "./controllers/stripeWebhook.js";
 
 const app = express();
-const port = process.env.PORT || 3000;
+
+// ✅ FIX: convert PORT to number
+const port = Number(process.env.PORT) || 3000;
 
 const trustedOrigins = process.env.TRUSTED_ORIGINS
   ? process.env.TRUSTED_ORIGINS.split(",")
